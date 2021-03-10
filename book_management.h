@@ -22,6 +22,19 @@ typedef struct _BookArray {
 	 unsigned int length; // number of elements in the (Book*) array 
 }BookArray;
 
+typedef struct user //用户
+{
+	char user_id[30];  //用户名
+	char password[30];  //密码
+	char username[30]; //有效证件号码
+	int admin;  //是否管理员
+	//struct node user_book;  //用户所借书籍
+	struct user* next;  //下一位用户
+}User;
+User* user_head;  //用户头指针
+User* adm1;  //超级管理员账号
+
+
 
 //saves the database of books in the specified file
 //returns 0 if books were stored correctly, or an error code otherwise
@@ -57,6 +70,30 @@ BookArray find_book_by_author (const char *author);
 //provided title can be found. The length of the array is also recorded in the returned structure, with 0 in case
 //array is the null pointer.
 BookArray find_book_by_year (unsigned int year);
+
+
+
+void user_register();  //用户注册
+void user_login();  //用户登录
+void admin_login();  //管理员登陆
+//核心功能区
+void creat_user_list(char*, char*, char*);  //创建用户链表
+
+
+void load();  //从文件中加载数据
+void save();  //保存数据到文件
+
+//用户功能区
+void user_menu(User*);  //用户菜单
+
+void borrow_book(User*);  //借阅管理
+void return_book(User*);  //还书管理
+
+
+//管理员功能区
+void admin_initi();  //超级管理员账号初始化
+User* serch_username(char*);  //查找用户名
+
 
 
 #endif
