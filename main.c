@@ -9,12 +9,7 @@ int main(int argc, char *argv[]) {
 	 main_menu();
 	return 0;
 }
-void load()  //从文件中加载数据
-{
-/*	book_head = (Book*)malloc(sizeof(Book));
-	book_head->next = NULL;
-	book_amount = 0;
-
+int load_books(FILE *file){
 	FILE* fp2;
 	fp2 = fopen("book.bin", "rb");
 	if (fp2 == NULL)
@@ -22,26 +17,40 @@ void load()  //从文件中加载数据
 		fp2 = fopen("book.bin", "wb");
 		if (fp2 == NULL)
 		{
-			printf("图书存储失败！\n"); exit(0);
+			printf("Loading fail！\n"); exit(0);
 		}
 		fclose(fp2);
+		return 0;
 	}
-	else
-	{
+	else loadbook();
+}
+int store_books(FILE *file){
+	FILE* fp = fopen("book.bin","wb");
+	void savebook();
+	return 1;
+	
+}
+void loadbook()  //从文件中加载数据
+{
+	array = (Book*)malloc(sizeof(Book));
+	array->next = NULL;
+	length = 0;
+
 		Book* bp = (Book*)malloc(sizeof(Book));
-		bp = book_head;
+		bp = array;
 		Book* tp = (Book*)malloc(sizeof(Book));
 		while (fread(tp, sizeof(Book), 1, fp2))
 		{
 			bp->next = tp;
-			++book_amount;
+			++length;
 			tp = tp->next;
 			tp = (Book*)malloc(sizeof(Book));
 			bp = bp->next;
 		}
 		fclose(fp2);
-	}
-*/
+}
+void load(){
+
 	user_head = (User*)malloc(sizeof(User));
 	user_head->next = NULL;
 	FILE* fp1;
@@ -74,8 +83,11 @@ void save()  //保存数据到文件
 		temp = temp->next;
 	}
 	fclose(fp);
+}
 
-	/*fp = fopen("book.bin", "wb");
+
+void savebook(){
+	fp = fopen("book.bin", "wb");
 	Book* tb = book_head->next;
 	while (tb)
 	{
@@ -83,7 +95,7 @@ void save()  //保存数据到文件
 		tb = tb->next;
 	}
 	fclose(fp);
-	*/
+	
 }
 void admin_initi()  //管理员账号初始化
 {
@@ -236,6 +248,78 @@ void main_menu()  //主菜单
 	}
 	
 }
+
+
+int add_book(Book book){
+	    unsigned int nbid; //Book ID
+		char *nbtitle; //book title
+		char *nbauthors; //comma separated list of authors
+		unsigned int nbyear; // year of publication
+		unsigned int nbcopies; //n
+	
+	printf("Please input Book ID：\n");
+	scanf("%d", &nbid);
+	printf("Please input the title of new book：\n");
+	scanf("%s", nbtitle);
+	printf("Please input the author of new book：\n");
+	scanf("%s", nbauthors);
+	printf("Please input the published year：\n");
+	scanf("%d",&nbyear );
+	printf("Please input the number of copies：\n");
+	scanf("%d", &nbcopies);
+	++length;
+	Book* np = (Book*)malloc(sizeof(Book));
+	np =array ;
+	while (np->next) np = np->next;
+	Book* book = (Book*)malloc(sizeof(Book));
+	book->id= nbid;
+	strcpy(book->title, nbtitle);
+	strcpy(book->authors, nbauthors);
+	book->= nbyear;
+	book->copies = nbcopies;
+	book->next = NULL;
+	nb->next = book;
+	savebook();
+	printf("Add successfully！\n");
+	system("pause"); system("cls");
+
+}
+void delete_book()  //删除图书信息
+{
+	while (1)
+	{
+		browse_book();
+		printf("Please input the Book ID(Enter 0 exit the delecte system)：\n");
+		int op; scanf("%d", &op);
+		if (op == 0)
+		{
+			printf("已成功退出删除系统！\n"); system("pause"); system("cls");
+			return;
+		}
+		else if (op > length || op < 0)
+		{
+			printf("请正确输入上图中待删除的图书序号！\n");
+		}
+		else
+		{
+			Book* tb = (Book*)malloc(sizeof(Book));
+			Book* np = (Book*)malloc(sizeof(Book));
+			np = array;
+			tb = array->next;
+			for (int i = 1; i < cnt; ++i)
+			{
+				np = tb;
+				tb = tb->next;
+			}
+			np->next = tb->next;
+			free(tb); --length;
+			save();
+			printf("Delect successfully！\n");
+		}
+		system("pause"); system("cls");
+	}
+}
+
 
 
 
