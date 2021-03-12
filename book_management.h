@@ -16,6 +16,12 @@ typedef struct _Book {
 		unsigned int year; // year of publication
 		unsigned int copies; //number of copies the library has
 }Book;
+Book* book_head; 
+struct node
+{
+  BOOK book;
+  struct node* next;
+};
 
 typedef struct _BookArray {
 	 Book* array; // pointer to array (or linked list) of struct Book.
