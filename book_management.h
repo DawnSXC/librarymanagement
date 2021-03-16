@@ -9,24 +9,23 @@
 */
 
 
-typedef struct _Book {
+typedef struct book {
 	    unsigned int id; //Book ID
 		char *title; //book title
 		char *authors; //comma separated list of authors
 		unsigned int year; // year of publication
 		unsigned int copies; //number of copies the library has
+		struct book* next;
 }Book;
-Book* book_head; 
-struct node
-{
-  BOOK book;
-  struct node* next;
-};
 
-typedef struct _BookArray {
-	 Book* array; // pointer to array (or linked list) of struct Book.
+Book *head = NULL;
+
+int flag = 0； 
+/*typedef struct _BookArray {
+	 BOOK* array; // pointer to array (or linked list) of struct Book.
 	 unsigned int length; // number of elements in the (Book*) array 
 }BookArray;
+*/
 
 typedef struct user //用户
 {
@@ -53,8 +52,8 @@ int load_books(FILE *file);
 
 //adds a book to the ones available to the library
 //returns 0 if the book could be added, or an error code otherwise
-int add_book(Book book);
-
+//int add_book(Book book);
+void add_book();
 //removes a book from the library
 //returns 0 if the book could be successfully removed, or an error code otherwise.
 int remove_book(Book book);
@@ -88,7 +87,8 @@ void creat_user_list(char*, char*, char*);  //创建用户链表
 
 void load();  //从文件中加载数据
 void save();  //保存数据到文件
-
+void loadbook();
+void savebook();
 //用户功能区
 void user_menu(User*);  //用户菜单
 
@@ -99,7 +99,6 @@ void return_book(User*);  //还书管理
 //管理员功能区
 void admin_initi();  //超级管理员账号初始化
 User* serch_username(char*);  //查找用户名
-
 
 
 #endif
