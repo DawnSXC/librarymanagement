@@ -2,45 +2,28 @@
 #define BOOK_MANAGEMENT_GUARD__H
 
 #include <stdio.h>
-
+#include<stdlib.h>
+#include<string.h>
 /*You can extend the structs (Book and BookArray) defined in this head file;
-  However, you may not change the function prototypes. 
-  You are also free to add additional head files and data structures as needed. 
+However, you may not change the function prototypes.
+You are also free to add additional head files and data structures as needed.
 */
 
 
-typedef struct book {
-	    unsigned int id; //Book ID
-		char *title; //book title
-		char *authors; //comma separated list of authors
-		unsigned int year; // year of publication
-		unsigned int copies; //number of copies the library has
-		struct book* next;
+typedef struct _Book {
+	unsigned int id; //Book ID
+	char *title; //book title
+	char *authors; //comma separated list of authors
+	unsigned int year; // year of publication
+	unsigned int copies; //number of copies the library has
 }Book;
 
-Book *head = NULL;
-
-int flag = 0； 
-/*typedef struct _BookArray {
-	 BOOK* array; // pointer to array (or linked list) of struct Book.
-	 unsigned int length; // number of elements in the (Book*) array 
+typedef struct _BookArray {
+	Book* array; // pointer to array (or linked list) of struct Book.
+	unsigned int length; // number of elements in the (Book*) array 
+	unsigned int max; // maximum of books
 }BookArray;
-*/
-
-typedef struct user //用户
-{
-	char user_id[30];  //用户名
-	char password[30];  //密码
-	char username[30]; //有效证件号码
-	int admin;  //是否管理员
-	//struct node user_book;  //用户所借书籍
-	struct user* next;  //下一位用户
-}User;
-User* user_head;  //用户头指针
-User* adm1;  //超级管理员账号
-
-
-
+extern BookArray books; //the variable used to store books
 //saves the database of books in the specified file
 //returns 0 if books were stored correctly, or an error code otherwise
 int store_books(FILE *file);
@@ -52,8 +35,8 @@ int load_books(FILE *file);
 
 //adds a book to the ones available to the library
 //returns 0 if the book could be added, or an error code otherwise
-//int add_book(Book book);
-void add_book();
+int add_book(Book book);
+
 //removes a book from the library
 //returns 0 if the book could be successfully removed, or an error code otherwise.
 int remove_book(Book book);
@@ -62,43 +45,19 @@ int remove_book(Book book);
 //returns a BookArray structure, where the field "array" is a newly allocated array of books, or null if no book with the 
 //provided title can be found. The length of the array is also recorded in the returned structure, with 0 in case
 //array is the null pointer.
-BookArray find_book_by_title (const char *title);
+BookArray find_book_by_title(const char *title);
 
 //finds books with the given authors.
 //returns a BookArray structure, where the field "array" is a newly allocated array of books, or null if no book with the 
 //provided title can be found. The length of the array is also recorded in the returned structure, with 0 in case
 //array is the null pointer.
-BookArray find_book_by_author (const char *author);
+BookArray find_book_by_author(const char *author);
 
 //finds books published in the given year.
 //returns a BookArray structure, where the field "array" is a newly allocated array of books, or null if no book with the 
 //provided title can be found. The length of the array is also recorded in the returned structure, with 0 in case
 //array is the null pointer.
-BookArray find_book_by_year (unsigned int year);
-
-
-
-void user_register();  //用户注册
-void user_login();  //用户登录
-void admin_login();  //管理员登陆
-//核心功能区
-void creat_user_list(char*, char*, char*);  //创建用户链表
-
-
-void load();  //从文件中加载数据
-void save();  //保存数据到文件
-void loadbook();
-void savebook();
-//用户功能区
-void user_menu(User*);  //用户菜单
-
-void borrow_book(User*);  //借阅管理
-void return_book(User*);  //还书管理
-
-
-//管理员功能区
-void admin_initi();  //超级管理员账号初始化
-User* serch_username(char*);  //查找用户名
+BookArray find_book_by_year(unsigned int year);
 
 
 #endif
